@@ -1,20 +1,22 @@
-```html
 <!doctype html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>POV — ZEvent Streamers</title>
+<title>POV — ZEvent 2026 Streamers</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   background:#09070f;
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
+
   background-image:
     radial-gradient(circle at 20% 0%,#7c3aed55,transparent 35%),
     radial-gradient(circle at 80% 10%,#ec489955,transparent 30%);
@@ -25,9 +27,11 @@ header{
   padding:30px 20px 24px;
   background:#0b0912dd;
   border-bottom:1px solid #ffffff1a;
+
   position:sticky;
   top:0;
-  z-index:5;
+  z-index:10;
+
   backdrop-filter:blur(10px);
 }
 
@@ -37,6 +41,7 @@ header{
   border:1px solid #ffffff18;
   border-radius:999px;
   padding:6px 12px;
+
   font-size:11px;
   font-weight:bold;
   letter-spacing:1.5px;
@@ -52,6 +57,53 @@ header p{
   color:#aaa3b3;
 }
 
+.controls{
+  width:min(1500px,94%);
+  margin:20px auto 0;
+
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.search{
+  flex:1;
+  min-width:250px;
+
+  padding:13px 15px;
+
+  background:#ffffff0d;
+  border:1px solid #ffffff18;
+  border-radius:12px;
+
+  color:#fff;
+  outline:none;
+
+  font-size:14px;
+}
+
+.search::placeholder{
+  color:#88818f;
+}
+
+.search:focus{
+  border-color:#8b5cf6;
+}
+
+.count{
+  display:flex;
+  align-items:center;
+
+  padding:0 15px;
+
+  background:#ffffff0d;
+  border:1px solid #ffffff12;
+  border-radius:12px;
+
+  color:#aaa3b3;
+  font-size:13px;
+}
+
 main{
   width:min(1500px,94%);
   margin:25px auto 45px;
@@ -61,8 +113,10 @@ main{
   background:#ffffff0d;
   border:1px solid #ffffff12;
   border-radius:12px;
+
   padding:12px 15px;
   margin-bottom:20px;
+
   color:#aaa3b3;
   font-size:13px;
   line-height:1.5;
@@ -78,44 +132,91 @@ main{
   background:#15111d;
   border:1px solid #ffffff12;
   border-radius:18px;
+
   overflow:hidden;
+
   box-shadow:0 14px 40px #0008;
 }
 
 .title{
   padding:13px 15px;
+
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:10px;
 }
 
 .name{
   font-weight:800;
   font-size:18px;
+
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
-.live{
-  background:#e11d48;
-  padding:5px 8px;
-  border-radius:6px;
+.category{
+  color:#8e8797;
   font-size:10px;
-  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:1px;
 }
 
 .video{
   aspect-ratio:16/9;
   background:#000;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-iframe{
+.video iframe{
   width:100%;
   height:100%;
   border:0;
   display:block;
 }
 
+.placeholder{
+  text-align:center;
+  padding:20px;
+}
+
+.placeholder-icon{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.placeholder p{
+  margin:0 0 15px;
+  color:#9992a2;
+  font-size:13px;
+}
+
+.load-btn{
+  background:#7c3aed;
+  color:#fff;
+
+  border:0;
+  border-radius:9px;
+
+  padding:9px 13px;
+
+  font-size:13px;
+  font-weight:bold;
+
+  cursor:pointer;
+}
+
+.load-btn:hover{
+  background:#8b5cf6;
+}
+
 .actions{
   padding:10px 14px 14px;
+
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -125,30 +226,56 @@ iframe{
 .actions span{
   color:#918999;
   font-size:12px;
+
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .actions a{
   background:#ffffff12;
   color:#fff;
+
   text-decoration:none;
+
   padding:8px 11px;
   border-radius:9px;
+
   font-size:13px;
   font-weight:bold;
+
+  white-space:nowrap;
 }
 
 .actions a:hover{
   background:#ffffff22;
 }
 
+.no-results{
+  display:none;
+
+  text-align:center;
+
+  padding:50px 20px;
+
+  background:#ffffff08;
+  border:1px solid #ffffff10;
+  border-radius:15px;
+
+  color:#aaa3b3;
+}
+
 footer{
   text-align:center;
+
   color:#706978;
   font-size:12px;
+
   padding:0 20px 30px;
 }
 
 @media(max-width:700px){
+
   h1{
     font-size:30px;
   }
@@ -160,6 +287,14 @@ footer{
   header{
     position:static;
   }
+
+  .controls{
+    flex-direction:column;
+  }
+
+  .count{
+    padding:12px 15px;
+  }
 }
 </style>
 </head>
@@ -167,187 +302,747 @@ footer{
 <body>
 
 <header>
-  <div class="badge">POV • ZEVENT</div>
-  <h1>Les streams en direct</h1>
-  <p>Les chaînes directement sur la page</p>
+
+  <div class="badge">POV • ZEVENT 2026</div>
+
+  <h1>Les streams du ZEvent 2026</h1>
+
+  <p>Tous les participants sur une seule page</p>
+
+  <div class="controls">
+
+    <input
+      id="search"
+      class="search"
+      type="search"
+      placeholder="🔎 Rechercher un participant..."
+      autocomplete="off"
+    >
+
+    <div class="count">
+      <span id="count">0</span>&nbsp; participants
+    </div>
+
+  </div>
+
 </header>
 
 <main>
 
-<div class="notice">
-  🎥 Les streams Twitch sont directement affichés sur cette page.
-  Si un streamer n'est pas en direct, le lecteur peut afficher son écran Twitch.
-</div>
-
-<section class="grid">
-
-<!-- ÉTOILES -->
-<article class="card">
-  <div class="title">
-    <span class="name">Étoiles</span>
-    <span class="live">STREAM</span>
+  <div class="notice">
+    🎥 Clique sur <strong>Afficher le stream</strong> pour charger le lecteur Twitch.
+    <br>
+    ⚡ Les lecteurs sont chargés uniquement à la demande afin de garder la page rapide.
   </div>
 
-  <div class="video">
-    <iframe
-      src="https://player.twitch.tv/?channel=etoiles&parent=bzk75-tech.github.io&autoplay=false"
-      allowfullscreen>
-    </iframe>
+  <section id="grid" class="grid"></section>
+
+  <div id="noResults" class="no-results">
+    Aucun participant trouvé.
   </div>
 
-  <div class="actions">
-    <span>twitch.tv/etoiles</span>
-    <a href="https://www.twitch.tv/etoiles" target="_blank" rel="noopener">
-      Ouvrir Twitch ↗
-    </a>
-  </div>
-</article>
-
-
-<!-- MASTU -->
-<article class="card">
-  <div class="title">
-    <span class="name">Mastu</span>
-    <span class="live">STREAM</span>
-  </div>
-
-  <div class="video">
-    <iframe
-      src="https://player.twitch.tv/?channel=mastu&parent=bzk75-tech.github.io&autoplay=false"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <div class="actions">
-    <span>twitch.tv/mastu</span>
-    <a href="https://www.twitch.tv/mastu" target="_blank" rel="noopener">
-      Ouvrir Twitch ↗
-    </a>
-  </div>
-</article>
-
-
-<!-- DOMINGO -->
-<article class="card">
-  <div class="title">
-    <span class="name">Domingo</span>
-    <span class="live">STREAM</span>
-  </div>
-
-  <div class="video">
-    <iframe
-      src="https://player.twitch.tv/?channel=domingo&parent=bzk75-tech.github.io&autoplay=false"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <div class="actions">
-    <span>twitch.tv/domingo</span>
-    <a href="https://www.twitch.tv/domingo" target="_blank" rel="noopener">
-      Ouvrir Twitch ↗
-    </a>
-  </div>
-</article>
-
-
-<!-- HELYDIA -->
-<article class="card">
-  <div class="title">
-    <span class="name">Helydia</span>
-    <span class="live">STREAM</span>
-  </div>
-
-  <div class="video">
-    <iframe
-      src="https://player.twitch.tv/?channel=helydia&parent=bzk75-tech.github.io&autoplay=false"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <div class="actions">
-    <span>twitch.tv/helydia</span>
-    <a href="https://www.twitch.tv/helydia" target="_blank" rel="noopener">
-      Ouvrir Twitch ↗
-    </a>
-  </div>
-</article>
-
-
-<!-- ENJOYPHOENIX -->
-<article class="card">
-  <div class="title">
-    <span class="name">EnjoyPhoenix</span>
-    <span class="live">STREAM</span>
-  </div>
-
-  <div class="video">
-    <iframe
-      src="https://player.twitch.tv/?channel=enjoyphoenix&parent=bzk75-tech.github.io&autoplay=false"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <div class="actions">
-    <span>twitch.tv/enjoyphoenix</span>
-    <a href="https://www.twitch.tv/enjoyphoenix" target="_blank" rel="noopener">
-      Ouvrir Twitch ↗
-    </a>
-  </div>
-</article>
-
-
-<!-- JLTOMY -->
-<article class="card">
-  <div class="title">
-    <span class="name">JLTomy</span>
-    <span class="live">STREAM</span>
-  </div>
-
-  <div class="video">
-    <iframe
-      src="https://player.twitch.tv/?channel=jltomy&parent=bzk75-tech.github.io&autoplay=false"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <div class="actions">
-    <span>twitch.tv/jltomy</span>
-    <a href="https://www.twitch.tv/jltomy" target="_blank" rel="noopener">
-      Ouvrir Twitch ↗
-    </a>
-  </div>
-</article>
-
-
-<!-- AMIXEM -->
-<article class="card">
-  <div class="title">
-    <span class="name">Amixem</span>
-    <span class="live">STREAM</span>
-  </div>
-
-  <div class="video">
-    <iframe
-      src="https://player.twitch.tv/?channel=amixem&parent=bzk75-tech.github.io&autoplay=false"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <div class="actions">
-    <span>twitch.tv/amixem</span>
-    <a href="https://www.twitch.tv/amixem" target="_blank" rel="noopener">
-      Ouvrir Twitch ↗
-    </a>
-  </div>
-</article>
-
-</section>
 </main>
 
 <footer>
-  Page fan non officielle • Les lecteurs vidéo sont fournis par Twitch.
+  Page fan non officielle • ZEvent 2026 • Les lecteurs vidéo sont fournis par Twitch.
 </footer>
+
+
+<script>
+
+/*
+===========================================================
+LISTE DES PARTICIPANTS ZEVENT 2026
+===========================================================
+*/
+
+/* Présents à Montpellier */
+const surPlace = [
+
+"Alderiate",
+"AlphaCast",
+"amixem",
+"Anaee",
+"AngleDroit",
+"AntoineDaniel",
+"Anyme",
+"Areliann",
+"AVAMind",
+"Aypierre",
+"BagheraJones",
+"BMSJOEL",
+"byilhann",
+"Chap",
+"chowh1",
+"Clemovitch",
+"CrocodyleTV",
+"DamDamLive",
+"DFG",
+"Doigby",
+"Domingo",
+"emilien",
+"EnjoyPhoenix",
+"Etoiles",
+"FefeGG",
+"Flamby",
+"Gius",
+"Gom4rt",
+"Hctuan",
+"helydia",
+"HortyUnderscore",
+"HyP_TV",
+"Jiraya",
+"JLTomy",
+"Joueur_du_Grenier",
+"Joyca",
+"JulietteArz",
+"KennyStream",
+"Laink",
+"Lapi",
+"Lege",
+"LexiTVz",
+"Linca",
+"LittleBigWhale",
+"Low4n",
+"Lutti",
+"Lydia",
+"Mastu",
+"mcflyetcarlito",
+"mistermv",
+"MoMaN",
+"Mynthos",
+"Narkuss",
+"natoo",
+"Nico_la",
+"Onutrem",
+"Ponce",
+"Pressea",
+"Rivenzi",
+"Sakor_",
+"Samuel Etienne",
+"SebJDG",
+"Shisheyu",
+"SkyrrozTV",
+"Splinter",
+"Sundae",
+"SylvainLyve",
+"TheGreatReview",
+"TheGuill84",
+"TraYtoN",
+"Trinity",
+"Trixy",
+"Tweekz",
+"Ultia",
+"Wakz",
+"Wingo",
+"Xari",
+"Yoona",
+"Zack Nani",
+"ZeratoR"
+
+];
+
+
+/* Participants à distance */
+const distance = [
+
+"Aducine",
+"Adyce_",
+"Aesmodia",
+"Airka_off",
+"Alinea_",
+"amo_ergo_sum__",
+"Anariake",
+"Antistar",
+"Arlaya",
+"arnaquemoisitupeux",
+"Artemize",
+"AsPig",
+"BabaYagaTV",
+"Bartchi",
+"BastiUi",
+"BCLV4",
+"behop_VeeK",
+"Bestmarmotte",
+"Bibou_LoL",
+"BidalTV",
+"Blanche_Omenka",
+"Bob Lennon",
+"Boomnasty_",
+"Brickmitri",
+"Brybry",
+"Bulledop",
+"CaptainFRACAS",
+"Chaton_Sauvage_",
+"ChezBubulle",
+"ChiTai",
+"ChrisKlippel",
+"CitronViolet",
+"Clara__cmoi",
+"Clara_l_Exploratrice",
+"ClubPingouin_Trash",
+"Coffee",
+"Dart0is",
+"David_Kyden",
+"Dedefion_TV",
+"DeejayMakina",
+"Did0us",
+"Drakeoz_",
+"Dramatictac",
+"Dreamschannelive",
+"DrFrenesy",
+"EchoRosen",
+"EkyLibre",
+"Ellbana",
+"EncreMecanique",
+"Eneaxy",
+"EosCall__",
+"Esliane",
+"Etoile_OW",
+"EYMRYC",
+"eziogdsp",
+"F_Bardino",
+"FabDColson",
+"FarodGames",
+"Fausthea",
+"FDS_Fallen",
+"Feywee",
+"FM_Guru",
+"Foxlo_",
+"GeekFabula",
+"General_Mass",
+"Grimvalth",
+"GuimauseTerrier",
+"HammerKick",
+"harumate",
+"Haskouil_x_Krousti",
+"Himala_Dofus",
+"Hiwamariri",
+"Hosarny",
+"HugoAuPerchoir",
+"iamfandol",
+"Ibra",
+"Impactx_",
+"IttleDew",
+"JardiStream",
+"jaunerougebleu",
+"JeanBaptisteShow",
+"JessBond",
+"Jidun",
+"Jjetgames",
+"kammy64",
+"KapslockArt",
+"KatChanVT",
+"Kejinn",
+"Keola",
+"Khalamite_live",
+"Koala_Cosy",
+"Koripeluche",
+"kwikwiii",
+"kyuness_",
+"La_Capitainerie",
+"la_golinval",
+"LaGameuseElle",
+"Lalain",
+"Lalou_Pissenlit",
+"LaTaverneDePatatus",
+"LeBoldHistoire",
+"LeChatEnCostume",
+"Lege",
+"LePotoMal",
+"Les_Archives",
+"Lodeeey",
+"Lu_K",
+"Lunae",
+"Lunium",
+"Lynkus",
+"m4fgaming",
+"MahyarS",
+"MaitreArmand",
+"Maitreleee",
+"Makse_tv",
+"MaLaRiaTV",
+"Malganyr",
+"Malm",
+"ManaRyuujin",
+"Mandhyne",
+"Manglouste",
+"Manonolita",
+"Maricanne",
+"marieandthesapphics",
+"masumorph",
+"MathoX",
+"Medalinya",
+"Melibellule",
+"Mellumine",
+"Meloka",
+"Menou",
+"Meteorann",
+"MichaelBielli",
+"MielCrapouille",
+"MiiOrca",
+"MissCliick_",
+"MisterPacoThai",
+"Mlle_Heloise",
+"mokappan",
+"MonsieurFoxx",
+"Morrigh4n",
+"mrclubprotv",
+"MrDeriv",
+"MrDrywiz",
+"nanie_nao",
+"Natsuko",
+"NECOtho",
+"Nejda",
+"NellyNessa",
+"Nia_c",
+"Niioor",
+"Notseriou_s",
+"Nykho",
+"Okanyaan_",
+"Oliarius",
+"olithinoa",
+"Omeega",
+"OnEst1_",
+"papy_grant",
+"ParamiaASMR",
+"PeachyPiwie",
+"Petitours",
+"Pomelyne",
+"Poncho_dlv",
+"PriscillaLiaud",
+"PurpleOfficiel",
+"RavenCross",
+"Rayakuzaa",
+"Recalbox",
+"Recharging",
+"RekRiot",
+"Ryuuna_VT",
+"salistoire",
+"Salma_",
+"Sawpalin",
+"Scorpio",
+"SeaOfThieves_France",
+"SEROTHS",
+"Sgauth",
+"Sheiyah",
+"Shinya_nia",
+"ShyroBoy",
+"Siha_art",
+"Skerax",
+"Skydarc",
+"SkylissFR",
+"SkyrrozTV",
+"Skyzio_",
+"Slyders_HS",
+"Sneaze_",
+"Sol_Hms",
+"SolaryHS",
+"Sparkly",
+"StanRenart",
+"Sturry",
+"SweetLullabyTV",
+"Tarkan_____",
+"TarTiine__",
+"Ter0pod",
+"ThecreeperEB",
+"TheHolomovement",
+"TipStevens",
+"TomTom",
+"ToutSeComprend",
+"UncleSkarzi",
+"Unname_Live",
+"V3LIA_",
+"ValeskaTwitch",
+"Verveine_",
+"Virudi",
+"Volpoune",
+"VulvyQueen",
+"Will_Boss_Gamer",
+"WillongShow",
+"Xynthiaa_",
+"Yohann_Harth",
+"Yumi_KTV",
+"yunaly_yt",
+"Zaelite",
+"ZEventPlays",
+"Zoltan",
+"Zoraeli"
+
+];
+
+
+/* Ankama */
+const ankama = [
+
+"BARBE___DOUCE",
+"Hexotik00",
+"Humility",
+"Huzounet",
+"Laniyelle",
+"ProTeam",
+"Rhobalas",
+"Tamaroush_Askemys",
+"Walkyrip",
+"Yodahkiin_"
+
+];
+
+
+/* Villa du ZEvent */
+const villa = [
+
+"Bytell2",
+"CHLOE",
+"Flonflon",
+"KAOsvmd",
+"Raumane",
+"ToneEUW",
+"TPK",
+"Tsunadida"
+
+];
+
+
+/* ZBase */
+const zbase = [
+
+"Bluestardust",
+"MonkyJV",
+"Xanaa",
+"Xillow__"
+
+];
+
+
+/*
+===========================================================
+CONSTRUCTION DE LA LISTE
+===========================================================
+*/
+
+const participants = [
+
+  ...surPlace.map(name => ({
+    name:name,
+    category:"Sur place"
+  })),
+
+  ...distance.map(name => ({
+    name:name,
+    category:"À distance"
+  })),
+
+  ...ankama.map(name => ({
+    name:name,
+    category:"Ankama"
+  })),
+
+  ...villa.map(name => ({
+    name:name,
+    category:"Villa du ZEvent"
+  })),
+
+  ...zbase.map(name => ({
+    name:name,
+    category:"ZBase"
+  }))
+
+];
+
+
+/*
+===========================================================
+NETTOYAGE / DOUBLONS
+===========================================================
+*/
+
+const unique = [];
+
+const alreadyAdded = new Set();
+
+participants.forEach(p => {
+
+  const key = p.name.toLowerCase();
+
+  if(!alreadyAdded.has(key)){
+
+    alreadyAdded.add(key);
+    unique.push(p);
+
+  }
+
+});
+
+
+/*
+===========================================================
+ÉLÉMENTS HTML
+===========================================================
+*/
+
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const count = document.getElementById("count");
+const noResults = document.getElementById("noResults");
+
+
+/*
+===========================================================
+CRÉATION DES CARTES
+===========================================================
+*/
+
+function createCard(participant,index){
+
+  const article = document.createElement("article");
+
+  article.className = "card";
+
+  article.dataset.name =
+    participant.name.toLowerCase();
+
+  article.dataset.category =
+    participant.category.toLowerCase();
+
+
+  article.innerHTML = `
+
+    <div class="title">
+
+      <span class="name">
+        ${escapeHtml(participant.name)}
+      </span>
+
+      <span class="category">
+        ${escapeHtml(participant.category)}
+      </span>
+
+    </div>
+
+
+    <div
+      class="video"
+      id="video-${index}"
+    >
+
+      <div class="placeholder">
+
+        <div class="placeholder-icon">
+          🎥
+        </div>
+
+        <p>
+          Charger le stream de
+          <strong>${escapeHtml(participant.name)}</strong>
+        </p>
+
+        <button
+          class="load-btn"
+          onclick="loadStream(${index})"
+        >
+          ▶ Afficher le stream
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <span>
+        twitch.tv/${escapeHtml(participant.name)}
+      </span>
+
+      <a
+        href="https://www.twitch.tv/${encodeURIComponent(participant.name)}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Ouvrir Twitch ↗
+      </a>
+
+    </div>
+
+  `;
+
+
+  return article;
+
+}
+
+
+/*
+===========================================================
+PROTECTION HTML
+===========================================================
+*/
+
+function escapeHtml(text){
+
+  return text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/*
+===========================================================
+CHARGEMENT DU STREAM TWITCH
+===========================================================
+*/
+
+function loadStream(index){
+
+  const participant =
+    unique[index];
+
+  if(!participant){
+    return;
+  }
+
+  const container =
+    document.getElementById("video-"+index);
+
+  if(!container){
+    return;
+  }
+
+
+  /*
+  Domaine GitHub Pages.
+  */
+
+  const parent =
+    window.location.hostname ||
+    "bzk75-tech.github.io";
+
+
+  const iframe =
+    document.createElement("iframe");
+
+
+  iframe.src =
+    "https://player.twitch.tv/" +
+    "?channel=" +
+    encodeURIComponent(participant.name) +
+    "&parent=" +
+    encodeURIComponent(parent) +
+    "&autoplay=false";
+
+
+  iframe.allowFullscreen = true;
+
+
+  iframe.setAttribute(
+    "allow",
+    "autoplay; fullscreen"
+  );
+
+
+  container.innerHTML = "";
+
+  container.appendChild(iframe);
+
+}
+
+
+/*
+===========================================================
+AFFICHAGE INITIAL
+===========================================================
+*/
+
+function render(){
+
+  grid.innerHTML = "";
+
+
+  unique.forEach((participant,index) => {
+
+    grid.appendChild(
+      createCard(participant,index)
+    );
+
+  });
+
+
+  count.textContent =
+    unique.length;
+
+}
+
+
+render();
+
+
+/*
+===========================================================
+RECHERCHE
+===========================================================
+*/
+
+search.addEventListener(
+  "input",
+  function(){
+
+    const value =
+      search.value
+        .trim()
+        .toLowerCase();
+
+
+    let visible = 0;
+
+
+    document
+      .querySelectorAll(".card")
+      .forEach(card => {
+
+        const name =
+          card.dataset.name;
+
+        const category =
+          card.dataset.category;
+
+
+        const match =
+          name.includes(value) ||
+          category.includes(value);
+
+
+        if(match){
+
+          card.style.display = "";
+          visible++;
+
+        }else{
+
+          card.style.display = "none";
+
+        }
+
+      });
+
+
+    noResults.style.display =
+      visible === 0
+        ? "block"
+        : "none";
+
+
+    count.textContent =
+      visible;
+
+  }
+);
+
+</script>
 
 </body>
 </html>
-```
